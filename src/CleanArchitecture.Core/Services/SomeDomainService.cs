@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Core.Services
+namespace CleanArchitecture.Core.Services
 {
     public class SomeDomainService
     {

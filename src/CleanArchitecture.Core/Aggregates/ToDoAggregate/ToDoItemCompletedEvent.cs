@@ -1,7 +1,6 @@
-﻿using CleanArchitecture.Core.Entities;
 using CleanArchitecture.SharedKernel;
 
-namespace CleanArchitecture.Core.Events
+namespace CleanArchitecture.Core.Aggregates.ToDoAggregate
 {
     public class ToDoItemCompletedEvent : BaseDomainEvent
     {

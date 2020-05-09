@@ -1,8 +1,7 @@
-﻿using CleanArchitecture.Core.Entities;
-using CleanArchitecture.Core.Events;
-using CleanArchitecture.Core.Interfaces;
+using CleanArchitecture.Core.Aggregates;
+using CleanArchitecture.Core.Aggregates.ToDoAggregate;
+using CleanArchitecture.Core.Handlers;
 using CleanArchitecture.Core.Services;
-using Moq;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -11,27 +10,20 @@ namespace CleanArchitecture.UnitTests.Core.Entities
 {
     public class ItemCompletedEmailNotificationHandlerHandle
     {
-        private ItemCompletedEmailNotificationHandler _handler;
-        private Mock<IEmailSender> _emailSenderMock;
-
-        public ItemCompletedEmailNotificationHandlerHandle()
-        {
-            _emailSenderMock = new Mock<IEmailSender>();
-            _handler = new ItemCompletedEmailNotificationHandler(_emailSenderMock.Object);
-        }
-
         [Fact]
         public async Task ThrowsExceptionGivenNullEventArgument()
         {
-            Exception ex = await Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null));
+            var handler = new ItemCompletedEmailNotificationHandler();
+
+            Exception ex = await Assert.ThrowsAsync<ArgumentNullException>(() => handler.Handle(null));
         }
 
         [Fact]
-        public async Task SendsEmailGivenEventInstance()
+        public async Task DoesNothingGivenEventInstance()
         {
-            await _handler.Handle(new ToDoItemCompletedEvent(new ToDoItem()));
+            var handler = new ItemCompletedEmailNotificationHandler();
 
-            _emailSenderMock.Verify(sender => sender.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            await handler.Handle(new ToDoItemCompletedEvent(new ToDoItem()));
         }
     }
 }

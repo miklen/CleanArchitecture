@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using CleanArchitecture.SharedKernel.Interfaces;
 using CleanArchitecture.SharedKernel;
 

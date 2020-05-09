@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Core;
+using CleanArchitecture.Core;
 using CleanArchitecture.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,9 +6,9 @@ namespace CleanArchitecture.Web.Pages.ToDoRazorPage
 {
     public class PopulateModel : PageModel
     {
-        private readonly IRepository _repository;
+        private readonly IRepository<int> _repository;
 
-        public PopulateModel(IRepository repository)
+        public PopulateModel(IRepository<int> repository)
         {
             _repository = repository;
         }

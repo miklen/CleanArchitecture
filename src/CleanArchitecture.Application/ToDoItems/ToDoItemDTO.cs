@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using CleanArchitecture.Core.Entities;
+using CleanArchitecture.Core.Aggregates;
+using CleanArchitecture.Core.Aggregates.ToDoAggregate;
 
-namespace CleanArchitecture.Web.ApiModels
+namespace CleanArchitecture.Application.ToDoItems
 {
     // Note: doesn't expose events or behavior
     public class ToDoItemDTO

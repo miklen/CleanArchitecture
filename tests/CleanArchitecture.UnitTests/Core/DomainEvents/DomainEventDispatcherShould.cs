@@ -1,11 +1,8 @@
-﻿using Autofac;
-using CleanArchitecture.Core.Entities;
-using CleanArchitecture.Core.Events;
+using Autofac;
+using CleanArchitecture.Core.Aggregates;
+using CleanArchitecture.Core.Aggregates.ToDoAggregate;
 using CleanArchitecture.Infrastructure;
 using CleanArchitecture.Infrastructure.DomainEvents;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using System;
 using Xunit;
 
 namespace CleanArchitecture.UnitTests.Core.DomainEvents
@@ -17,8 +14,6 @@ namespace CleanArchitecture.UnitTests.Core.DomainEvents
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule(new DefaultInfrastructureModule(isDevelopment: true));
-            builder.RegisterType<NullLoggerFactory>().As<ILoggerFactory>().SingleInstance();
-            builder.RegisterGeneric(typeof(Logger<>)).As(typeof(ILogger<>)).SingleInstance();
             var container = builder.Build();
 
             var domainEventDispatcher = new DomainEventDispatcher(container);

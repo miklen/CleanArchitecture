@@ -1,13 +1,14 @@
-﻿using CleanArchitecture.SharedKernel.Interfaces;
+using CleanArchitecture.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Core.Entities;
+using CleanArchitecture.Core.Aggregates;
 using CleanArchitecture.SharedKernel;
 using Ardalis.EFCore.Extensions;
 using System.Reflection;
 using JetBrains.Annotations;
+using CleanArchitecture.Core.Aggregates.ToDoAggregate;
 
 namespace CleanArchitecture.Infrastructure.Data
 {
@@ -31,6 +32,15 @@ namespace CleanArchitecture.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            var entityTypes = modelBuilder.Model
+                .GetEntityTypes()
+                .Where(t => typeof(IDomainEventable).IsAssignableFrom(t.ClrType));
+            foreach (var entityType in entityTypes)
+            {
+                var entityTypeBuilder = modelBuilder.Entity(entityType.ClrType);
+                entityTypeBuilder.Ignore(nameof(IDomainEventable.Events));
+            }
+
             modelBuilder.ApplyAllConfigurationsFromCurrentAssembly();
 
             // alternately this is built-in to EF Core 2.2
@@ -45,7 +55,7 @@ namespace CleanArchitecture.Infrastructure.Data
             if (_dispatcher == null) return result;
 
             // dispatch events only if save was successful
-            var entitiesWithEvents = ChangeTracker.Entries<BaseEntity>()
+            var entitiesWithEvents = ChangeTracker.Entries<IDomainEventable>()
                 .Select(e => e.Entity)
                 .Where(e => e.Events.Any())
                 .ToArray();

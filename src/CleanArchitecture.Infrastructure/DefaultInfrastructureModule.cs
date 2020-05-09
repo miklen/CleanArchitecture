@@ -1,6 +1,5 @@
-﻿using Autofac;
+using Autofac;
 using CleanArchitecture.Core;
-using CleanArchitecture.Core.Interfaces;
 using CleanArchitecture.Infrastructure.Data;
 using CleanArchitecture.Infrastructure.DomainEvents;
 using CleanArchitecture.SharedKernel.Interfaces;
@@ -19,7 +18,7 @@ namespace CleanArchitecture.Infrastructure
         {
             _isDevelopment = isDevelopment;
             var coreAssembly = Assembly.GetAssembly(typeof(DatabasePopulator));
-            var infrastructureAssembly = Assembly.GetAssembly(typeof(EfRepository));
+            var infrastructureAssembly = Assembly.GetAssembly(typeof(EfRepository<>));
             _assemblies.Add(coreAssembly);
             _assemblies.Add(infrastructureAssembly);
             if (callingAssembly != null)
@@ -45,14 +44,11 @@ namespace CleanArchitecture.Infrastructure
         {
             builder.RegisterType<DomainEventDispatcher>().As<IDomainEventDispatcher>()
                 .InstancePerLifetimeScope();
-            builder.RegisterType<EfRepository>().As<IRepository>()
+            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(_assemblies.ToArray())
                 .AsClosedTypesOf(typeof(IHandle<>));
-
-            builder.RegisterType<EmailSender>().As<IEmailSender>()
-                .InstancePerLifetimeScope();
         }
 
         private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)

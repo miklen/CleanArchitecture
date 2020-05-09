@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Core.Entities;
+using CleanArchitecture.Core.Aggregates.ToDoAggregate;
 using CleanArchitecture.SharedKernel.Interfaces;
 using System.Linq;
 
@@ -6,7 +6,7 @@ namespace CleanArchitecture.Core
 {
     public static class DatabasePopulator
     {
-        public static int PopulateDatabase(IRepository todoRepository)
+        public static int PopulateDatabase(IRepository<int> todoRepository)
         {
             if (todoRepository.ListAsync<ToDoItem>().Result.Count() >= 3) return 0;
 

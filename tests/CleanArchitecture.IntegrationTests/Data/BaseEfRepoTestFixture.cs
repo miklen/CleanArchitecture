@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.SharedKernel.Interfaces;
+using CleanArchitecture.SharedKernel.Interfaces;
 using CleanArchitecture.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,13 +27,13 @@ namespace CleanArchitecture.IntegrationTests.Data
             return builder.Options;
         }
 
-        protected EfRepository GetRepository()
+        protected EfRepository<int> GetRepository()
         {
             var options = CreateNewContextOptions();
             var mockDispatcher = new Mock<IDomainEventDispatcher>();
 
             _dbContext = new AppDbContext(options, mockDispatcher.Object);
-            return new EfRepository(_dbContext);
+            return new EfRepository<int>(_dbContext);
         }
     }
 }

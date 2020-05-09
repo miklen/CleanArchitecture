@@ -1,4 +1,4 @@
-﻿using Autofac.Extensions.DependencyInjection;
+using Autofac.Extensions.DependencyInjection;
 using CleanArchitecture.Infrastructure.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;

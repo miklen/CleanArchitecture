@@ -1,7 +1,8 @@
-﻿using CleanArchitecture.Core;
-using CleanArchitecture.Core.Entities;
+using CleanArchitecture.Application.ToDoItems.Queries;
+using CleanArchitecture.Core;
+using CleanArchitecture.Core.Aggregates;
 using CleanArchitecture.SharedKernel.Interfaces;
-using CleanArchitecture.Web.ApiModels;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,17 +11,18 @@ namespace CleanArchitecture.Web.Controllers
 {
     public class ToDoController : Controller
     {
-        private readonly IRepository _repository;
+        private readonly IRepository<int> _repository;
+        private readonly IMediator _mediator;
 
-        public ToDoController(IRepository repository)
+        public ToDoController(IRepository<int> repository, IMediator mediator)
         {
             _repository = repository;
+            _mediator = mediator;
         }
 
         public async Task<IActionResult> Index()
         {
-            var items = (await _repository.ListAsync<ToDoItem>())
-                            .Select(ToDoItemDTO.FromToDoItem);
+            var items = await _mediator.Send(new GetTodoItemListQuery());
             return View(items);
         }
 

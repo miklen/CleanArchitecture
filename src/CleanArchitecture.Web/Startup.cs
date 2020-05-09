@@ -1,5 +1,6 @@
-﻿using Ardalis.ListStartupServices;
+using Ardalis.ListStartupServices;
 using Autofac;
+using CleanArchitecture.Application;
 using CleanArchitecture.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,6 +57,9 @@ namespace CleanArchitecture.Web
 				// optional - default path to view services is /listallservices - recommended to choose your own path
 				config.Path = "/listservices";
 			});
+
+			// Adds Dependency Injection for CleanArchitecture.Application query and commands - using MediatR
+			services.AddApplication();
 		}
 
 		public void ConfigureContainer(ContainerBuilder builder)

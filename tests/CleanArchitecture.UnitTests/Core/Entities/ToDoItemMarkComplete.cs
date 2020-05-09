@@ -1,5 +1,5 @@
-﻿using CleanArchitecture.Core.Entities;
-using CleanArchitecture.Core.Events;
+using CleanArchitecture.Core.Aggregates;
+using CleanArchitecture.Core.Aggregates.ToDoAggregate;
 using System.Linq;
 using Xunit;
 

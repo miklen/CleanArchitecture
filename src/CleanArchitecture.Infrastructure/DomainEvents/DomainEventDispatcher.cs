@@ -1,4 +1,4 @@
-﻿using Autofac;
+using Autofac;
 using CleanArchitecture.SharedKernel.Interfaces;
 using CleanArchitecture.SharedKernel;
 using System;
