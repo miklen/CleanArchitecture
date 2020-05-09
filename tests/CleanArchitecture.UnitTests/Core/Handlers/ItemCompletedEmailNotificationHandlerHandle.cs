@@ -1,6 +1,6 @@
 using CleanArchitecture.Core.Aggregates;
 using CleanArchitecture.Core.Aggregates.ToDoAggregate;
-using CleanArchitecture.Core.Handlers;
+using CleanArchitecture.Core.EventHandlers;
 using CleanArchitecture.Core.Services;
 using System;
 using System.Threading.Tasks;
